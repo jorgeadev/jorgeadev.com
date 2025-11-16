@@ -9,7 +9,7 @@
 		"lint": "eslint . --max-warnings 0",
 		"lint:fix": "eslint . --fix --max-warnings 0",
 		"db:seed": "tsx src/db/seed/dev.ts",
-		"postinstall": "prisma generate"
+		"postinstall": "prisma migrate dev && prisma generate"
 	},
 	"dependencies": {
 		"@prisma/client": "6.19.0",
