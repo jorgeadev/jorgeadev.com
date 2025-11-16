@@ -1,0 +1,181 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+    provider = "prisma-client"
+    output   = "./generated"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("VITO_DATABASE_URL")
+}
+
+enum RoleTypes {
+    USER
+    ADMIN
+    MODERATOR
+    CREATOR
+    SUPPORTER
+    CONTRIBUTOR
+}
+
+enum NotificationType {
+    LIKE
+    REPLY
+    MENTION
+    MISC
+    SYSTEM
+}
+
+enum UserStatus {
+    ACTIVE
+    SUSPENDED
+    DEACTIVATED
+    PENDING
+    BANNED
+}
+
+model UserLink {
+    id        String   @id @default(uuid()) @db.Uuid
+    user      User[]
+    url       String   @db.VarChar(2048)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model User {
+    id                   String         @id @default(uuid()) @db.Uuid
+    name                 String
+    email                String         @unique
+    emailVerified        DateTime?
+    image                String?
+    sessions             Session[]
+    roles                Role[]
+    Account              Account[]
+    createdAt            DateTime       @default(now())
+    updatedAt            DateTime       @updatedAt
+    toUserNotification   Notification[] @relation("notificationToUser")
+    fromUserNotification Notification[] @relation("notificationFromUser")
+    comments             Comment[]
+    status               UserStatus     @default(ACTIVE)
+    userLinks            UserLink[]
+    /// this is the bio that shows up on the profile page
+    bio                  String         @default("") @db.VarChar(1000)
+    posts                Post[]
+}
+
+model Account {
+    id                String  @id @default(uuid()) @db.Uuid
+    userId            String  @db.Uuid
+    type              String
+    provider          String
+    providerAccountId String
+    refresh_token     String?
+    access_token      String?
+    expires_at        Int?
+    token_type        String?
+    scope             String?
+    id_token          String?
+    session_state     String?
+    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([provider, providerAccountId])
+    @@index([userId])
+}
+
+model Session {
+    id           String   @id @default(uuid()) @db.Uuid
+    sessionToken String   @unique
+    expires      DateTime
+    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId       String   @db.Uuid
+}
+
+model Role {
+    id   String    @id @default(uuid()) @db.Uuid
+    user User[]
+    role RoleTypes @unique
+}
+
+model Notification {
+    id         String           @id @default(uuid()) @db.Uuid
+    createdAt  DateTime         @default(now())
+    updatedAt  DateTime         @updatedAt
+    isRead     Boolean          @default(false)
+    type       NotificationType
+    toUser     User             @relation("notificationToUser", fields: [toUserId], references: [id])
+    toUserId   String           @db.Uuid
+    fromUser   User?            @relation("notificationFromUser", fields: [fromUserId], references: [id])
+    fromUserId String?          @db.Uuid
+    /// can be used to replace the blurb (eg: mention you in a comment)
+    blurb      String?
+    url        String
+    commentId  String?          @db.Uuid
+    comment    Comment?         @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+    @@index([toUserId])
+    @@index([fromUserId])
+    @@index([commentId])
+}
+
+enum RootTypes {
+    POST // Blog posts, articles, announcements
+    COMMENT // Reply to another comment (nested comments)
+    PROJECT // GitHub-style projects, repositories
+    SNIPPET // Code snippets, gists
+    PROFILE // User profiles, bio sections
+    TUTORIAL // Step-by-step guides
+    CHALLENGE // Coding challenges, exercises
+    QUESTION // Q&A style questions (Stack Overflow-like)
+    DISCUSSION // General discussions, forums
+    REVIEW // Code reviews, pull request comments
+    OTHER // Catch-all for future expansion
+}
+
+model Comment {
+    id      String  @id @default(uuid()) @db.Uuid
+    text    String  @db.VarChar(1000)
+    visible Boolean @default(true)
+
+    // Parent comment for nested/threaded comments
+    parentId String?   @db.Uuid
+    parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    replies  Comment[] @relation("CommentReplies")
+
+    // Root entity this comment belongs to
+    rootType RootTypes // Required - no default
+    rootId   String    @db.Uuid // ID of the POST, PROJECT, etc.
+
+    // User who created the comment
+    userId String @db.Uuid
+    user   User   @relation(fields: [userId], references: [id])
+
+    // Metadata
+    createdAt     DateTime       @default(now())
+    updatedAt     DateTime       @updatedAt
+    notifications Notification[]
+
+    // Post relation (if commenting on a Post)
+    post   Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+    postId String? @db.Uuid
+
+    @@index([parentId])
+    @@index([userId])
+    @@index([rootType, rootId]) // Query all comments for a specific entity
+}
+
+model Post {
+    id          String    @id @default(uuid()) @db.Uuid
+    title       String
+    description String
+    content     String
+    user        User      @relation(fields: [userId], references: [id])
+    userId      String    @db.Uuid
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    comments    Comment[]
+}
