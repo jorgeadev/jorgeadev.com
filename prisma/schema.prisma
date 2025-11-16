@@ -12,7 +12,7 @@ generator client {
 
 datasource db {
     provider = "postgresql"
-    url      = env("VITO_DATABASE_URL")
+    url      = env("DATABASE_URL")
 }
 
 enum RoleTypes {
