@@ -3,8 +3,14 @@ import { HeaderWrapper } from "@/components/wrapper/header-wrapper";
 import clsx from "clsx";
 import { buttonVariants } from "@/components/ui/button";
 import { SignInButtonHome } from "@/components/auth/signin/signin-button-home";
+import { auth } from "@/auth/server";
 
-export const Navigation = () => {
+export const Navigation = async () => {
+	const [session] = await Promise.all([auth()]);
+
+	console.log({ session });
+
+
 	return (
 		<header className="w-full px-3">
 			<HeaderWrapper>
@@ -29,7 +35,7 @@ export const Navigation = () => {
 								Support Us
 							</Link>
 
-							<SignInButtonHome session={""} />
+							<SignInButtonHome session={session} />
 						</div>
 					</div>
 				</div>
