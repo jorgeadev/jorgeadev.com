@@ -29,7 +29,10 @@
 			"@prisma/*": [
 				"./prisma/*"
 			]
-		}
+		},
+		"typeRoots": [
+			"./src/types",
+		]
 	},
 	"include": [
 		"next-env.d.ts",

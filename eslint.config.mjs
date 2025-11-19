@@ -23,7 +23,7 @@ const eslintConfig = defineConfig([
 				},
 			],
 			"@typescript-eslint/no-explicit-any": "warn",
-			"@typescript-eslint/consistent-type-definitions": ["error", "type"],
+			// "@typescript-eslint/consistent-type-definitions": ["error", "type"],
 			"@typescript-eslint/consistent-type-imports": ["error", {
 				prefer: "type-imports",
 				fixStyle: "inline-type-imports"
