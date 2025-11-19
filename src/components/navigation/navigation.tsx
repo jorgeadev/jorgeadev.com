@@ -29,7 +29,7 @@ export const Navigation = () => {
 								Support Us
 							</Link>
 
-							<SignInButtonHome />
+							<SignInButtonHome session={""} />
 						</div>
 					</div>
 				</div>
