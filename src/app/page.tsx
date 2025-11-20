@@ -1,4 +1,4 @@
-import { CreateUser } from "@/components/user/create-user";
+import { CreateUser } from "@/components/profile/create-user";
 
 export const RootPage = () => {
 	return (

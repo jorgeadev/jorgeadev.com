@@ -1,7 +1,7 @@
 "use client";
 
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from "@/auth/react";
 import type { ReactNode } from "react";
 
 export const Providers = ({ children }: { children: ReactNode }) => {

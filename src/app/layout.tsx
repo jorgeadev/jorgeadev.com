@@ -3,6 +3,7 @@ import { Lexend } from "next/font/google";
 import "@/styles/globals.css";
 import { Providers } from "@/app/providers";
 import type { ReactNode } from "react";
+import { Toaster } from "@/components/ui/sonner";
 
 const lexend = Lexend({
 	variable: "--font-lexend",
@@ -27,6 +28,7 @@ export const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
 				<Providers>
 					{children}
 				</Providers>
+				<Toaster />
 			</body>
 		</html>
 	);

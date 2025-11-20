@@ -78,7 +78,7 @@ export const createGitHubProvider = (clientId: string, clientSecret: string) => 
 		clientSecret,
 		profile: (profile) => ({
 			id: profile.id.toString(),
-			name: profile.name || profile.login,
+			name: profile.login || profile.name,
 			email: profile.email,
 			image: profile.avatar_url,
 			roles: [],
@@ -103,4 +103,4 @@ export const authOptions = {
 	providers: [createGitHubProvider(process.env.AUTH_GITHUB_ID, process.env.AUTH_GITHUB_SECRET)],
 };
 
-export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
+export const { handlers, auth } = NextAuth(authOptions);

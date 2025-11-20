@@ -1,0 +1,20 @@
+import { cn } from "@/lib/utils";
+import { GitHub, Linkedin, LinkIcon, Twitter, Youtube } from "@/utils/icons";
+
+export const MagicIcons = ({ url, className }: { url: string; className?: string }) => {
+	const githubRegex = /^(?:https?:\/\/)?(?:www\.)?github\.com\/(?:\w+)(\/)?$/;
+	const twitterRegex = /^(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:\w+)(\/)?$/;
+	const xRegex = /^(?:https?:\/\/)?(?:www\.)?x\.com\/(?:\w+)(\/)?$/;
+	const linkedinRegex = /^(?:https?:\/\/)?(?:www\.)?linkedin\.com\/(?:\w+)(\/)?$/;
+	const youtubeRegex = /^(?:https?:\/\/)?(?:www\.)?youtube\.com\/(?:\w+)(\/)?$/;
+
+	const lowercaseUrl = url.toLowerCase();
+
+	if (githubRegex.test(lowercaseUrl)) { return <GitHub className={cn("h-3 w-3", className)} />; }
+	if (twitterRegex.test(lowercaseUrl)) { return <Twitter className={cn("h-3 w-3", className)} />; }
+	if (xRegex.test(lowercaseUrl)) { return <Twitter className={cn("h-3 w-3", className)} />; }
+	if (linkedinRegex.test(lowercaseUrl)) { return <Linkedin className={cn("h-3 w-3", className)} />; }
+	if (youtubeRegex.test(lowercaseUrl)) { return <Youtube className={cn("h-3 w-3", className)} />; }
+
+	return <LinkIcon className={cn("h-3 w-3", className)} />;
+};
