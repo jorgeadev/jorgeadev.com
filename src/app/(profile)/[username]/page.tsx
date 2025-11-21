@@ -4,7 +4,7 @@ import { IconAvatar } from "@/components/navigation/nav-avatar";
 import { getGradient, getTitles } from "@/components/profile/profile-badge";
 import { ProfileTitle } from "@/components/profile/profile-title";
 import { Button } from "@/components/ui/button";
-import { getUserByUserName } from "@/db/users";
+import { getActiveUserByUserName } from "@/db/users";
 import { cn } from "@/lib/utils";
 import { type UserNameParams } from "@/types/profile";
 import { UserPen } from "@/utils/icons";
@@ -18,7 +18,7 @@ const ProfilePage = async ({ params }: { params: UserNameParams }) => {
 		return notFound();
 	}
 
-	const user = await getUserByUserName(username);
+	const user = await getActiveUserByUserName(username);
 	if (!user) {
 		return notFound();
 	}
@@ -30,7 +30,6 @@ const ProfilePage = async ({ params }: { params: UserNameParams }) => {
 	const isOwnProfile = session?.user.id === user.id;
 
 	console.log("Page: ", { userLinks }, "Bio: ", user.bio);
-
 
 	return (
 		<div className="px-2 pt-8 lg:px-0 lg:pt-10">

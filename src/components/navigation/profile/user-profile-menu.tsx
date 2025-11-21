@@ -25,14 +25,14 @@ export const UserProfileMenu = ({ session, isAdmin, isAdminOrModerator }: Naviga
 					className="w-56 rounded-lg bg-white/50 backdrop-blur-sm dark:bg-neutral-950/50"
 				>
 					<Link className="block" href={`/@${session.user.name}`}>
-						<DropdownMenuItem className="focus:bg-accent cursor-pointer rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+						<DropdownMenuItem className="user-profile-menu">
 							<User className="mr-2 h-4 w-4" />
 							<span>Profile</span>
 						</DropdownMenuItem>
 					</Link>
 
 					<Link href={`@${session.user.name}/edit`} className="block">
-						<DropdownMenuItem className="focus:bg-accent cursor-pointer rounded-md p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700">
+						<DropdownMenuItem className="user-profile-menu">
 							<Settings2 className="mr-2 h-4 w-4" />
 							<span>Settings</span>
 						</DropdownMenuItem>
@@ -43,14 +43,14 @@ export const UserProfileMenu = ({ session, isAdmin, isAdminOrModerator }: Naviga
 					{isAdminOrModerator && (
 						<>
 							<Link href={""} className="block">
-								<DropdownMenuItem className="focus:bg-accent cursor-pointer rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+								<DropdownMenuItem className="user-profile-menu">
 									<Settings className="mr-2 h-4 w-4" />
 									<span>Admin Dashboard</span>
 								</DropdownMenuItem>
 							</Link>
 
 							<Link className="block" href="/challenge-playground">
-								<DropdownMenuItem className="focus:bg-accent cursor-pointer rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+								<DropdownMenuItem className="user-profile-menu">
 									<Play className="mr-2 h-4 w-4" />
 									<span>Challenge Playground</span>
 								</DropdownMenuItem>
@@ -60,24 +60,24 @@ export const UserProfileMenu = ({ session, isAdmin, isAdminOrModerator }: Naviga
 
 					{isAdmin && (
 						<Link href="/share" className="block">
-							<DropdownMenuItem className="focus:bg-accent cursor-pointer rounded-lg p-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/50">
+							<DropdownMenuItem className="user-profile-menu">
 								<ExternalLink className="mr-2 h-4 w-4" />
 								<span>URL Shortener</span>
 							</DropdownMenuItem>
 						</Link>
 					)}
 
-					<div className="mt-1 flex items-center justify-between rounded-lg px-2 py-0.5 text-sm">
+					<div className="flex items-center justify-between px-3 text-sm hover:bg-accent cursor-pointer rounded-sm duration-300 focus:outline-none dark:hover:bg-neutral-700/80">
 						<div className="flex items-center gap-2">
 							<Palette className="text-muted-foreground mr-2 h-4 w-4" />
 							<span>Theme</span>
 						</div>
-						<ThemeSwitch />
+						<ThemeSwitch type="menu" />
 					</div>
 
 					<DropdownMenuSeparator className="mx-0.5" />
 
-					<SignOutLink className="w-full cursor-pointer gap-1" />
+					<SignOutLink className="w-full cursor-pointer gap-2 rounded-sm" />
 				</DropdownMenuContent>
 			</DropdownMenu>
 		)

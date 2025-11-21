@@ -1,5 +1,5 @@
 import { ProfileEditForm } from "@/components/profile/edit/edit-form";
-import { getUserByUserNameOrThrow } from "@/db/users";
+import { getUserByUserName } from "@/db/users";
 import { type UserNameParams } from "@/types/profile";
 import { notFound } from "next/navigation";
 
@@ -9,7 +9,11 @@ const ProfileEditPage = async ({ params }: { params: UserNameParams }) => {
 		return notFound();
 	}
 
-	const user = await getUserByUserNameOrThrow(username);
+	const user = await getUserByUserName(username);
+	if (!user) {
+		return notFound();
+	}
+
 
 	return (
 		<div className="mx-auto pt-8 lg:pt-10 flex items-center flex-col p-3">

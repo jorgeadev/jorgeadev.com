@@ -170,3 +170,7 @@
 		--gradient-angle: 0deg;
 	}
 }
+
+.user-profile-menu {
+	@apply focus:bg-accent cursor-pointer rounded-sm px-3 py-2 duration-300 focus:outline-none dark:hover:bg-neutral-700/80;
+}

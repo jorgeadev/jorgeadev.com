@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useTheme } from "next-themes";
 import { useSyncExternalStore } from "react";
 
-export const ThemeSwitch = () => {
+export const ThemeSwitch = ({ type }: { type?: "menu" | "button" }) => {
 	const { theme: T, setTheme } = useTheme();
 	const mounted = useSyncExternalStore(
 		() => () => { },
@@ -27,14 +27,14 @@ export const ThemeSwitch = () => {
 	}
 
 	return (
-		<div className="flex items-center rounded-full border p-px">
+		<div className="my-0.5 flex items-center rounded-full border p-px">
 			{themes.map((theme) => {
 				const isActive = T === theme;
 
 				return (
 					<motion.button
 						key={theme}
-						className={cn("m-0.5 rounded-full p-1.5", isActive && "bg-secondary")}
+						className={cn("m-0.5 rounded-full p-1.5", isActive && "bg-border")}
 						onClick={() => setTheme(theme)}
 						aria-label="theme button"
 						whileHover={{ scale: 1.1 }}
@@ -42,19 +42,19 @@ export const ThemeSwitch = () => {
 						layout
 						transition={{ type: "spring", stiffness: 300, damping: 20 }}
 					>
-						{theme === "system" && <Laptop aria-hidden="true" className="size-4" />}
+						{theme === "system" && <Laptop aria-hidden="true" className={cn("size-4", type === "menu" && "size-3")} />}
 
 						{theme === "light" && (
 							<Sun
 								aria-hidden="true"
-								className={cn("size-4", isActive && "fill-black dark:fill-white")}
+								className={cn("size-4", isActive && "fill-black dark:fill-white", type === "menu" && "size-3")}
 							/>
 						)}
 
 						{theme === "dark" && (
 							<Moon
 								aria-hidden="true"
-								className={cn("size-4", isActive && "fill-black dark:fill-white")}
+								className={cn("size-4", isActive && "fill-black dark:fill-white", type === "menu" && "size-3")}
 							/>
 						)}
 					</motion.button>

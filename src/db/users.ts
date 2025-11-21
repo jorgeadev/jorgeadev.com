@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 
-export const getUserByUserName = (username: string) => {
-	return prisma.user.findFirst({
+export const getActiveUserByUserName = (username: string) => {
+	const user = prisma.user.findFirst({
 		where: {
 			name: username,
 			status: "ACTIVE",
@@ -16,10 +16,12 @@ export const getUserByUserName = (username: string) => {
 			userLinks: true,
 		},
 	});
+
+	return user;
 };
 
-export const getUserByUserNameOrThrow = async (username: string) => {
-	return prisma.user.findFirstOrThrow({
+export const getUserByUserName = (username: string) => {
+	const user = prisma.user.findFirst({
 		where: {
 			name: username,
 		},
@@ -33,4 +35,6 @@ export const getUserByUserNameOrThrow = async (username: string) => {
 			},
 		},
 	});
+
+	return user;
 };

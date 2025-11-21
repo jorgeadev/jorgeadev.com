@@ -19,7 +19,7 @@ export const SignOutLink = ({ className }: { className?: string }) => {
 		<Button
 			variant="ghost"
 			className={clsx(
-				"bg-opacity-50 h-9 justify-start px-2 text-red-500 hover:bg-red-500/20 hover:text-red-500 dark:hover:bg-red-500/20",
+				"bg-opacity-50 justify-start text-red-500 hover:bg-red-500/20 hover:text-red-500 dark:hover:bg-red-500/20",
 				className
 			)}
 			onClick={handleSignOut}
