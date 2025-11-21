@@ -62,11 +62,12 @@ export const ProfileEditForm = ({ user, className }: ProfileEditFormProps) => {
 		}
 	};
 
+	// TODO: Handle the case of add a space in links and textareas fields
 	return (
 		<Form {...form}>
 			<form
 				onSubmit={form.handleSubmit(onSubmit)}
-				className={cn("flex max-w-sm flex-col lg:max-w-full", className)}
+				className={cn("flex max-w-xl flex-col lg:max-w-full", className)}
 			>
 				<FormField
 					control={form.control}
@@ -74,9 +75,9 @@ export const ProfileEditForm = ({ user, className }: ProfileEditFormProps) => {
 					render={({ field }) => (
 						<FormItem className="flex flex-col lg:max-w-full lg:flex-row lg:items-center lg:justify-between">
 							<FormLabel className="w-32">Bio</FormLabel>
-							<div className="max-w-sm grow space-y-2 lg:mx-auto lg:max-w-md">
+							<div className="max-w-lg grow space-y-2 lg:mx-auto lg:max-w-xl">
 								<FormControl>
-									<Textarea {...field} placeholder="Tell others a bit about yourself..." rows={4} />
+									<Textarea {...field} placeholder="Tell others a bit about yourself..." className="min-h-[120px]" />
 								</FormControl>
 								<FormDescription>{form.getValues("bio").length} / 256 characters</FormDescription>
 								<FormMessage />
@@ -87,9 +88,9 @@ export const ProfileEditForm = ({ user, className }: ProfileEditFormProps) => {
 
 				<Separator />
 
-				<FormItem className="flex max-w-sm flex-col lg:max-w-full lg:flex-row lg:items-center lg:justify-between sm:w-xl">
+				<FormItem className="flex max-w-lg flex-col lg:max-w-full lg:flex-row lg:items-center lg:justify-between">
 					<FormLabel className="w-32">User Links</FormLabel>
-					<div className="max-w-sm grow space-y-2 lg:mx-auto lg:max-w-md">
+					<div className="max-w-lg grow space-y-2 lg:mx-auto lg:max-w-xl">
 						{userLinksField.fields.map((field, index) => (
 							<div key={index}>
 								<FormControl>

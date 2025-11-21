@@ -5,7 +5,7 @@ export const LayoutWrapper = ({ children, footer, header, showHeader = true, sho
 		<>
 			{showHeader && header}
 
-			<main className="mx-auto grow">
+			<main className="mx-auto grow w-full">
 				{children}
 			</main>
 
